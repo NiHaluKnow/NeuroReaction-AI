@@ -1,5 +1,4 @@
 package GaMe;
-
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,14 +16,17 @@ public class ChainReactionGame {
     public ChainReactionGame() {
         this(9, 6); //initial board size
     }
-
+    /* Constructor to initialize the game with specified rows and columns
+     * @param rows: number of rows in the board
+     * @param cols: number of columns in the board
+    */
     public ChainReactionGame(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
         this.board = new Cell[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                board[i][j] = new Cell(0, null); //each board cell starts with 0 mass and no player
+                board[i][j] = new Cell(0, null); //each board cell starts with 0 mass and no player 
             }
         }
         this.currentPlayer = 'R'; // Red first
