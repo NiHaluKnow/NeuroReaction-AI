@@ -230,7 +230,6 @@ Created as part of an AI/Game Theory course project.
 ## 🙏 Acknowledgments
 
 - Inspired by the classic Chain Reaction mobile game
-- Minimax algorithm: Russell & Norvig, *Artificial Intelligence: A Modern Approach*
 
 ---
 
