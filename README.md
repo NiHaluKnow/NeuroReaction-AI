@@ -229,8 +229,9 @@ This project was created as a part of the course **CSE-318: Artificial Intellige
 
 ## 🙏 Acknowledgments
 
-- Inspired by the classic Chain Reaction mobile game
+- Inspired by the classic Chain Reaction mobile game .
+
 
 ---
 
-**Enjoy the game!** ⚡️ If you find this project interesting, please give it a ⭐ on GitHub!
+**Enjoy the game!** ⚡️ If you find this project interesting, please give it a ⭐ on GitHub! Thank You < 3
