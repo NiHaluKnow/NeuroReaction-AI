@@ -11,8 +11,12 @@ myenv/
 venv/
 env/
 ENV/
+ENV.sh
 *.pyc
 __pycache__/
+
+# PDF files (reports, assignments, course materials)
+*.pdf
 
 # Game state files
 gamestate.txt
