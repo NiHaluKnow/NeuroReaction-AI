@@ -1,12 +1,10 @@
 package Ai_Player;
-
 import java.util.*;
-
 import GaMe.ChainReactionGame;
 
 public class AIPlayer {
     public char player;
-    public int depth;               // depth of the minimax search
+    public int depth;               // depth of the minimax search for the AI
     public String heuristic;
     public int nodesEvaluated;
     public int pruningCount;
@@ -43,7 +41,8 @@ public class AIPlayer {
      * getMove method to get the moves for the AI player
      * @param game: the current state of the game
      * @return: the best move for the AI player
-     * This method uses the minimax algorithm with alpha-beta pruning to find the best move
+     * This method uses the minimax algorithm with alpha-beta pruning to find the best move.
+     * It also tracks the number of nodes evaluated and the number of times pruning occurred.
     */
     public int[] getMove(ChainReactionGame game) {
         
