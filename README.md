@@ -1,4 +1,4 @@
-# Chain Reaction Game
+# Chain Reaction Game 
 
 A strategic grid-based game implementation in Java featuring an intelligent AI opponent powered by Minimax algorithm with Alpha-Beta pruning.
 
@@ -225,7 +225,7 @@ This project is open source and available under the MIT License.
 
 ## 👨‍💻 Author
 
-Created as part of an AI/Game Theory course project.
+This project was created as a part of the course **CSE-318: Artificial Intelligence**
 
 ## 🙏 Acknowledgments
 
