@@ -30,7 +30,7 @@ public class ChainReactionLauncher {
 
         switch (choice) {
             case 1:
-                // Human vs Human
+                // Human vs Human play
                 launcher.playHumanVsHuman(game, scanner, stateFile, choice);
                 break;
             case 2:
@@ -45,7 +45,7 @@ public class ChainReactionLauncher {
                 }
                 break;
             case 3:
-                // AI vs AI
+                // AI vs AI play
                 redAI = new AIPlayer('R', 3, "combined");
                 blueAI = new AIPlayer('B', 3, "combined");
                 launcher.playAIVsAI(game, redAI, blueAI, scanner, stateFile, choice);
