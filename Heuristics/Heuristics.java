@@ -1,4 +1,5 @@
 package Heuristics;
+
 import GaMe.ChainReactionGame;
 import GaMe.Cell;
 
@@ -14,12 +15,12 @@ public class Heuristics {
         Cell[][] board = game.getBoard();
         double score = 0;
         char opponent = (player == 'R') ? 'B' : 'R';
-        
+
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 Cell cell = board[r][c];
                 int criticalMass = game.getCriticalMass(r, c);
-                
+
                 if (cell.player != null) {
                     if (cell.player == player) {
                         score += (double) cell.mass / criticalMass;
@@ -29,18 +30,24 @@ public class Heuristics {
                 }
             }
         }
-        
+
         return score;
     }
 
-    public double orbCountHeuristic(char player,ChainReactionGame game) {
+    /*
+     * Orb Count Heuristic: This heuristic simply counts the total number of orbs
+     * for the player and subtracts the total number of orbs for the opponent. A
+     * higher positive score indicates a better position for the player, while a
+     * negative score indicates dominance by the opponent.
+     */
+    public double orbCountHeuristic(char player, ChainReactionGame game) {
         int rows = game.getRows();
         int cols = game.getCols();
         Cell[][] board = game.getBoard();
         int playerOrbs = 0;
         int opponentOrbs = 0;
         char opponent = (player == 'R') ? 'B' : 'R';
-        
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 Cell cell = board[i][j];
@@ -53,10 +60,17 @@ public class Heuristics {
                 }
             }
         }
-        
+
         return playerOrbs - opponentOrbs;
     }
 
+    /*
+     * Strategic Position Heuristic: This heuristic evaluates the board based on the
+     * strategic value of cell positions. Corners and edges are more valuable due to
+     * their lower critical mass, making them easier to control and defend. The
+     * heuristic assigns higher weights to orbs in these positions, encouraging the
+     * AI to occupy and maintain control over them.
+     */
     public double strategicPositionHeuristic(char player, ChainReactionGame game) {
         double score = 0;
         char opponent = (player == 'R') ? 'B' : 'R';
@@ -67,19 +81,20 @@ public class Heuristics {
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 Cell cell = board[r][c];
-                if (cell.mass == 0) continue;
-                
+                if (cell.mass == 0)
+                    continue;
+
                 double positionValue = 1.0; // Default for center
                 int criticalMass = game.getCriticalMass(r, c);
-                
-                if (criticalMass == 2) { 
+
+                if (criticalMass == 2) {
                     // Corner
                     positionValue = 2.0;
                 } else if (criticalMass == 3) {
                     // Edge
                     positionValue = 1.5;
                 }
-                
+
                 if (cell.player != null) {
                     if (cell.player == player) {
                         score += positionValue * cell.mass;
@@ -89,74 +104,86 @@ public class Heuristics {
                 }
             }
         }
-        
+
         return score;
     }
 
+    /*
+     * Killer Move Heuristic: This heuristic rewards cells that are one or zero orbs
+     * away from reaching their critical mass, especially if they are adjacent to
+     * opponent's orbs. It encourages the AI to make aggressive moves that can
+     * trigger chain reactions and capture opponent's orbs.
+     */
     public double killerMoveHeuristic(char player, ChainReactionGame game) {
-    int rows = game.getRows();
-    int cols = game.getCols();
-    Cell[][] board = game.getBoard();
-    char opponent = (player == 'R') ? 'B' : 'R';
+        int rows = game.getRows();
+        int cols = game.getCols();
+        Cell[][] board = game.getBoard();
+        char opponent = (player == 'R') ? 'B' : 'R';
 
-    double score = 0.0;
+        double score = 0.0;
 
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            Cell cell = board[i][j];
-            if (cell.player != null && cell.player == player) {
-                int criticalMass = game.getCriticalMass(i, j);
-                int danger = criticalMass - cell.mass;
-                if (danger == 1) {
-                    score += 5.0; 
-                } else if (danger == 0) {
-                    score += 8.0;
-                }
-                int[][] directions = {
-                                        {1,0}, // Down
-                                        {-1,0}, // Up
-                                        {0,1}, // Right
-                                        {0,-1} // Left
-                                    };
-                for (int[] dir : directions) {
-                    int ni = i + dir[0];
-                    int nj = j + dir[1];
-                    if (ni >= 0 && ni < rows && nj >= 0 && nj < cols) {
-                        Cell neighbor = board[ni][nj];
-                        if (neighbor.player != null && neighbor.player == opponent) {
-                            score += 2.0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                Cell cell = board[i][j];
+                if (cell.player != null && cell.player == player) {
+                    int criticalMass = game.getCriticalMass(i, j);
+                    int danger = criticalMass - cell.mass;
+                    if (danger == 1) {
+                        score += 5.0;
+                    } else if (danger == 0) {
+                        score += 8.0;
+                    }
+                    int[][] directions = {
+                            { 1, 0 }, // Down
+                            { -1, 0 }, // Up
+                            { 0, 1 }, // Right
+                            { 0, -1 } // Left
+                    };
+                    for (int[] dir : directions) {
+                        int ni = i + dir[0];
+                        int nj = j + dir[1];
+                        if (ni >= 0 && ni < rows && nj >= 0 && nj < cols) {
+                            Cell neighbor = board[ni][nj];
+                            if (neighbor.player != null && neighbor.player == opponent) {
+                                score += 2.0;
+                            }
                         }
                     }
                 }
             }
         }
+
+        return score;
     }
 
-    return score;
-}
-
-    
+    /*
+     * Conversion Potential Heuristic: This heuristic focuses on cells that are one
+     * orb away from reaching their critical mass and are adjacent to opponent's
+     * orbs. It rewards positions where triggering a chain reaction could convert
+     * opponent's orbs into the player's orbs, thus maximizing the impact of a
+     * single move.
+     */
     public double conversionPotentialHeuristic(char player, ChainReactionGame game) {
         int rows = game.getRows();
         int cols = game.getCols();
         Cell[][] board = game.getBoard();
         double score = 0;
         char opponent = (player == 'R') ? 'B' : 'R';
-        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-        
+        int[][] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 Cell cell = board[r][c];
                 int criticalMass = game.getCriticalMass(r, c);
 
                 if (cell.player != null && cell.player == player && cell.mass == criticalMass - 1) {
-             
+
                     for (int[] dir : directions) {
                         int nr = r + dir[0], nc = c + dir[1];
                         if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
                             Cell adjCell = board[nr][nc];
                             if (adjCell.player != null && adjCell.player == opponent) {
-                                score += adjCell.mass * 2; 
+                                score += adjCell.mass * 2;
                             }
                         }
                     }
@@ -166,18 +193,25 @@ public class Heuristics {
         return score;
     }
 
+    /*
+     * Growth Potential Heuristic: This heuristic evaluates the potential for future
+     * growth by identifying empty cells adjacent to the player's orbs and
+     * single-orb cells that are not immediately threatened by opponent's orbs. It
+     * rewards positions that can lead to expansion and increased control over the
+     * board in subsequent moves.
+     */
     public double growthPotentialHeuristic(char player, ChainReactionGame game) {
         int rows = game.getRows();
         int cols = game.getCols();
         Cell[][] board = game.getBoard();
         double score = 0;
         char opponent = (player == 'R') ? 'B' : 'R';
-        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-        
+        int[][] directions = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 Cell cell = board[r][c];
-                
+
                 if (cell.player == null) {
                     // Empty cell - potential for growth
                     // Check if it's adjacent to player's cells
@@ -210,7 +244,7 @@ public class Heuristics {
                 }
             }
         }
-        
+
         return score;
     }
 
