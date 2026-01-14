@@ -2,7 +2,7 @@
 
 A strategic grid-based game implementation in Java featuring an intelligent AI opponent powered by Minimax algorithm with Alpha-Beta pruning.
 
-![Game Mode](https://img.shields.io/badge/Mode-PvP%20%7C%20PvE%20%7C%20AI%20vs%20AI-blue)
+![Game Mode](https://img.shields.io/badge/Mode-PvP%20%7C%20PvAI%20%7C%20AI%20vs%20AI-blue)
 ![Java](https://img.shields.io/badge/Java-11+-orange)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
