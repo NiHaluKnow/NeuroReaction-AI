@@ -1,0 +1,53 @@
+# Compiled class files
+*.class
+
+# Java package files
+*.jar
+*.war
+*.ear
+
+# Python virtual environment
+myenv/
+venv/
+env/
+ENV/
+*.pyc
+__pycache__/
+
+# Game state files
+gamestate.txt
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build directories
+build/
+dist/
+target/
+
+# Log files
+*.log
+
+# Generated reports
+report.html
+*.html
+
+# Temporary files
+*.tmp
+*.bak
+*.orig
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
