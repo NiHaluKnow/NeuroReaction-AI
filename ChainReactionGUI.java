@@ -18,7 +18,7 @@ public class ChainReactionGUI {
     public static final String AI_HEADER = "AI Move:";
     public static final int CELL_SIZE = 60;
 
-    // constants
+    // constants for colors
     public static final Color BG_COLOR = new Color(28, 40, 51);
     public static final Color BOARD_COLOR = new Color(44, 62, 80);
     public static final Color GRID_COLOR = new Color(52, 73, 94);
@@ -43,20 +43,20 @@ public class ChainReactionGUI {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            // Create the main frame for mode selection
+            // Create the main frame for mode selection 
             JFrame modeFrame = new JFrame("Chain Reaction - Mode Selection");
             modeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             modeFrame.setSize(600, 500);
             modeFrame.setLayout(new BorderLayout());
             modeFrame.getContentPane().setBackground(new Color(28, 40, 51));
 
-            // Create particle system for background animation
+            // Create particle system for background animation 
             List<SelectionParticle> particles = new ArrayList<>();
             for (int i = 0; i < 50; i++) {
                 particles.add(new SelectionParticle(modeFrame.getWidth(), modeFrame.getHeight()));
             }
 
-            // Animated background panel
+            // Animated background panel for mode selection
             JPanel animatedPanel = new JPanel(new BorderLayout()) {
                 @Override
                 protected void paintComponent(Graphics g) {
